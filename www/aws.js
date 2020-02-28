@@ -4,8 +4,10 @@ const AWS = require("aws-sdk");
 const config_1 = require("./config/config");
 const c = config_1.config.dev;
 //Configure AWS
-var credentials = new AWS.SharedIniFileCredentials({ profile: 'default' });
-AWS.config.credentials = credentials;
+if (c.aws_profile !== "DEPLOYED") {
+    var credentials = new AWS.SharedIniFileCredentials({ profile: 'default' });
+    AWS.config.credentials = credentials;
+}
 exports.s3 = new AWS.S3({
     signatureVersion: 'v4',
     region: c.aws_region,
