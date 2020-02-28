@@ -30,12 +30,16 @@ router.get('/', (req, res) => __awaiter(this, void 0, void 0, function* () {
     });
     res.send(items);
 }));
-//@TODO
-//Add an endpoint to GET a specific resource by Primary Key
-// update a specific resource
-router.patch('/:id', auth_router_1.requireAuth, (req, res) => __awaiter(this, void 0, void 0, function* () {
-    //@TODO try it yourself
-    res.send(500).send("not implemented");
+router.get('/:id', (req, res) => __awaiter(this, void 0, void 0, function* () {
+    let { id } = req.params;
+    if (!id) {
+        return res.status(400).send('id is required');
+    }
+    const item = yield FeedItem_1.FeedItem.findByPk(id);
+    if (!item) {
+        res.status(404).send('id not found');
+    }
+    res.status(200).send(item);
 }));
 // Get a signed url to put a new item in the bucket
 router.get('/signed-url/:fileName', auth_router_1.requireAuth, (req, res) => __awaiter(this, void 0, void 0, function* () {
