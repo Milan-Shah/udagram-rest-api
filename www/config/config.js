@@ -7,9 +7,9 @@ exports.config = {
         "database": process.env.UDAGRAM_DATABASE,
         "host": process.env.UDAGRAM_HOST,
         "dialect": "postgres",
-        "aws_region": process.env.UDAGRAM_AWS_REGION,
-        "aws_profile": process.env.UDAGRAM_AWS_PROFILE,
-        "aws_media_bucket": process.env.UDAGRAM_AWS_MEDIA_BUCKET,
+        "aws_region": process.env.AWS_REGION,
+        "aws_profile": process.env.AWS_PROFILE,
+        "aws_media_bucket": process.env.AWS_MEDIA_BUCKET,
         "jwt": process.env.JWT_SECRET
     }
 };
