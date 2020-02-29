@@ -115,14 +115,16 @@ router.post('/', async (req: Request, res: Response) => {
     });
 
     let savedUser;
+    let leanUserObject;
     try {
         savedUser = await newUser.save();
+        leanUserObject = savedUser.toJSON();
     } catch (e) {
         throw e;
     }
 
     // Generate JWT
-    const jwt = generateJWT(savedUser);
+    const jwt = generateJWT(leanUserObject);
 
     res.status(201).send({token: jwt, user: savedUser.short()});
 });
