@@ -80,7 +80,7 @@ router.post('/login', (req, res) => __awaiter(this, void 0, void 0, function* ()
         return res.status(401).send({ auth: false, message: 'Unauthorized' });
     }
     // Generate JWT
-    const jwt = generateJWT(user);
+    const jwt = generateJWT(user.toJSON());
     res.status(200).send({ auth: true, token: jwt, user: user.short() });
 }));
 //register a new user
@@ -107,15 +107,17 @@ router.post('/', (req, res) => __awaiter(this, void 0, void 0, function* () {
         password_hash: password_hash
     });
     let savedUser;
+    let leanUserObject;
     try {
         savedUser = yield newUser.save();
+        leanUserObject = savedUser.toJSON();
     }
     catch (e) {
         throw e;
     }
     // Generate JWT
-    const jwt = generateJWT(savedUser);
-    res.status(201).send({ token: jwt, user: savedUser.short() });
+    const jwt = generateJWT(leanUserObject);
+    res.status(200).send({ token: jwt, user: savedUser.short() });
 }));
 router.get('/', (req, res) => __awaiter(this, void 0, void 0, function* () {
     res.send('auth');
